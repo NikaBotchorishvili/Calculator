@@ -12,7 +12,6 @@ items.forEach((item) => {
 				inputBox.innerText += item.getAttribute("data-num");
 			}
 		} else if (item.getAttribute("data-action")) {
-            console.log("pass")
 			if (inputBox != null) {
 				if (!action) {
 					inputBox.innerText += item.getAttribute("data-action");
@@ -25,3 +24,9 @@ items.forEach((item) => {
 		}
 	});
 });
+
+equals?.addEventListener("click", () => {
+    if(inputBox?.innerText != '' && inputBox != null){
+        inputBox.innerText = eval(inputBox.innerText)
+    }
+})

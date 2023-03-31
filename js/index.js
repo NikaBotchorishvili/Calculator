@@ -1,6 +1,8 @@
 "use strict";
 const items = document.querySelectorAll(".item");
 const inputBox = document.getElementById("input-box");
+const equals = document.getElementById("equals");
+const clear = document.getElementById("clear");
 let action = false;
 items.forEach((item) => {
     item.addEventListener("click", () => {
@@ -10,7 +12,6 @@ items.forEach((item) => {
             }
         }
         else if (item.getAttribute("data-action")) {
-            console.log("pass");
             if (inputBox != null) {
                 if (!action) {
                     inputBox.innerText += item.getAttribute("data-action");
@@ -23,4 +24,9 @@ items.forEach((item) => {
             }
         }
     });
+});
+equals === null || equals === void 0 ? void 0 : equals.addEventListener("click", () => {
+    if ((inputBox === null || inputBox === void 0 ? void 0 : inputBox.innerText) != '' && inputBox != null) {
+        inputBox.innerText = eval(inputBox.innerText);
+    }
 });
