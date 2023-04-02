@@ -1,4 +1,5 @@
 const historyListElement = document.getElementById("history-list");
+const clearHistoryElement = document.querySelector(".clear-history");
 
 const inputBox = document.getElementById("input-box");
 
@@ -9,24 +10,21 @@ const clear = document.getElementById("clear");
 let action: boolean = false;
 let lastAction: string | null = "";
 
-if(window.localStorage.getItem("calculationHistory") == null) {
+if (window.localStorage.getItem("calculationHistory") == null) {
 	window.localStorage.setItem("calculationHistory", "");
-}else{
-	const calculationHistory = window.localStorage.getItem("calculationHistory")
-	if(calculationHistory != null && calculationHistory != ""){
-		const calcHistoryArray = calculationHistory.split(" ")
-		calcHistoryArray.forEach(element => {
-			if(element != ""){
+} else {
+	const calculationHistory =
+		window.localStorage.getItem("calculationHistory");
+	if (calculationHistory != null && calculationHistory != "") {
+		const calcHistoryArray = calculationHistory.split(" ");
+		calcHistoryArray.forEach((element) => {
+			if (element != "") {
 				CreateCalculationListItem(element);
-				console.log(element)
+				console.log(element);
 			}
 		});
 	}
-	
 }
-
-
-
 
 //	This piece of code loops through every item such as actions and numbers except equals and clear
 items.forEach((item) => {
@@ -46,7 +44,6 @@ items.forEach((item) => {
 				lastAction = actionValue;
 			} else if (action && actionValue != null) {
 				if (lastAction != actionValue) {
-
 					inputBox.innerText =
 						inputBox.innerText.slice(0, -1) + actionValue;
 					lastAction = actionValue;
@@ -63,9 +60,13 @@ equals?.addEventListener("click", () => {
 		inputBox.innerText = answer;
 
 		CreateCalculationListItem(equation);
-		
-		const oldCalculationHistory = window.localStorage.getItem("calculationHistory");
-		window.localStorage.setItem("calculationHistory", oldCalculationHistory + ' ' + `${equation}`)
+
+		const oldCalculationHistory =
+			window.localStorage.getItem("calculationHistory");
+		window.localStorage.setItem(
+			"calculationHistory",
+			oldCalculationHistory + " " + `${equation}`
+		);
 		action = false;
 		// 	This action=false makes it so we can continue addition, multiplication, division etc after clicking on equals
 	}
@@ -74,6 +75,11 @@ equals?.addEventListener("click", () => {
 clear?.addEventListener("click", () => {
 	if (inputBox != null) inputBox.innerText = "";
 	action = false;
+});
+
+clearHistoryElement?.addEventListener("click", () => {
+	window.localStorage.removeItem("calculationHistory");
+	if (historyListElement != null) historyListElement.innerHTML = "";
 });
 
 function CreateCalculationListItem(equation: string) {
